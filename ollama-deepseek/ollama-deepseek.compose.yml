@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  ollama:
+    image: ollama/ollama:0.5.11
+    container_name: ollama-rag
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama  # Persistent storage for models
+      - ./entrypoint.sh:/entrypoint.sh:ro  # Mount the startup script
+    networks:
+      - rag-net
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia  # Enable GPU acceleration
+              count: all
+              capabilities: [ gpu ]
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]  # Run the startup script
+    tty: true  # Keep the container running interactively
+
+networks:
+  rag-net:
+    driver: bridge
+
+volumes:
+  ollama_data:
+    driver: local
