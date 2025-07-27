@@ -9,7 +9,7 @@ until curl -s http://localhost:11434 > /dev/null; do
   sleep 1
 done
 
-MODELS="codellama:7b deepseek-coder:6.7b"
+MODELS="deepseek-coder:6.7b"
 
 for MODEL in $MODELS; do
   if ! ollama list | grep -q "$MODEL"; then
