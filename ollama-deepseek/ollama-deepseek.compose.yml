@@ -1,31 +1,15 @@
-version: "3.8"
-
+# ./docker-compose.yml
 services:
   ollama:
-    image: ollama/ollama:0.5.11
-    container_name: ollama-rag
-    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ollama
     ports:
-      - "11434:11434"
+      - "8091:8080"  # public access is via proxy
     volumes:
-      - ollama_data:/root/.ollama  # Persistent storage for models
-      - ./entrypoint.sh:/entrypoint.sh:ro  # Mount the startup script
-    networks:
-      - rag-net
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia  # Enable GPU acceleration
-              count: all
-              capabilities: [ gpu ]
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]  # Run the startup script
-    tty: true  # Keep the container running interactively
-
-networks:
-  rag-net:
-    driver: bridge
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
 
 volumes:
-  ollama_data:
-    driver: local
+  ollama-data:
