@@ -5,6 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: ollama
+    environment:
+      OLLAMA_NUM_PARALLEL: 1
+      OLLAMA_MAX_LOADED_MODELS: 1
     ports:
       - "8091:8080"  # public access is via proxy
     volumes:
