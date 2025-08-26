@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=Asia/Jakarta
+      - TZ=Asia/Jakarta
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=maman123
+      - N8N_BASIC_AUTH_PASSWORD=TheRealMaman123!@#
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_DATABASE=djong_n8n
+      - DB_POSTGRESDB_HOST=91.108.104.69
+      - DB_POSTGRESDB_PORT=5433
+      - DB_POSTGRESDB_USER=postgres
+      - DB_POSTGRESDB_SCHEMA=public
+      - DB_POSTGRESDB_PASSWORD=ak4r01092023#@
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
+    name: n8n_data
