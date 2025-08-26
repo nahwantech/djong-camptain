@@ -1,7 +1,12 @@
 # ./Dockerfile
 FROM ollama/ollama
 
-RUN apt-get update && apt-get install -y curl nginx && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    curl \
+    nginx \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
 COPY ollama-entrypoint.sh /ollama-entrypoint.sh
 COPY ollama-nginx.conf /etc/nginx/nginx.conf
